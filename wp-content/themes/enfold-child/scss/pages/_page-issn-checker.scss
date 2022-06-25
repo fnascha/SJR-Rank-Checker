@@ -1,0 +1,82 @@
+&.page-issn-checker {
+  h1 {
+    font-size: 45px;
+    padding-bottom: 15px;
+    color: #EEEEEE;
+  }
+
+  h2 {
+    font-size: 38px;
+    color: #FF8C32;
+  }
+
+  .avia_codeblock {
+    text-align: center;
+
+    form {
+      width: 60%;
+      margin: 0 auto;
+    }
+
+    button {
+      padding: 10px 8px;
+      background-color: #FF8C32;
+      color: #EEEEEE;
+      font-size: 20px;
+      border: 1px solid #FF8C32;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #06113c;
+      }
+    }
+
+    #response_holder_issn {
+      margin-top: 25px;
+
+      #author_holder{
+        background-color: $journalblue;
+        padding:20px;
+        font-size: 28px;
+        line-height: 36px;
+        color: $journalwhite;
+        border-radius: 10px;
+      }
+
+      #issn_holder {
+        display: flex;
+        flex-direction: row;
+        margin-top: 25px;
+        background-color: $journalorange;
+        border-radius: 10px;
+        padding: 20px;
+
+        .issn_holder_data, .title_holder, .top_rank_holder {
+          width: 33%;
+        }
+
+        .title_holder {
+          font-size: 22px;
+          line-height: 26px;
+        }
+
+        .top_rank_holder {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          font-size: 22px;
+          line-height: 28px;
+        }
+
+        .issn_holder_data,{
+          font-size: 20px;
+          line-height: 26px;
+        }
+      }
+    }
+  }
+  #input-field-data-holder-issn, #input-field-author {
+    border-color: $journalorange;
+  }
+
+}

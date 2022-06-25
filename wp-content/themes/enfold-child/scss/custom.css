@@ -1,0 +1,148 @@
+#top.home h1 {
+  font-size: 45px;
+  padding-bottom: 15px;
+  color: #EEEEEE;
+}
+#top.home h2 {
+  font-size: 38px;
+  color: #FF8C32;
+}
+#top.home .avia_codeblock {
+  text-align: center;
+}
+#top.home .avia_codeblock form {
+  width: 50%;
+  margin: 0 auto;
+}
+#top.home .avia_codeblock button {
+  padding: 10px 8px;
+  background-color: #FF8C32;
+  color: #EEEEEE;
+  font-size: 20px;
+  border: 1px solid #FF8C32;
+  cursor: pointer;
+}
+#top.home .avia_codeblock button:hover {
+  background-color: #06113c;
+}
+#top.home .avia_codeblock #response_holder {
+  margin-top: 25px;
+}
+#top.home .avia_codeblock #response_holder tr {
+  display: flex;
+  width: 70%;
+  margin: 0 auto;
+}
+#top.home .avia_codeblock #response_holder tr td {
+  width: 100%;
+}
+#top.home #input-field-data-holder {
+  border-color: #FF8C32;
+}
+#top.page-issn-checker h1 {
+  font-size: 45px;
+  padding-bottom: 15px;
+  color: #EEEEEE;
+}
+#top.page-issn-checker h2 {
+  font-size: 38px;
+  color: #FF8C32;
+}
+#top.page-issn-checker .avia_codeblock {
+  text-align: center;
+}
+#top.page-issn-checker .avia_codeblock form {
+  width: 60%;
+  margin: 0 auto;
+}
+#top.page-issn-checker .avia_codeblock button {
+  padding: 10px 8px;
+  background-color: #FF8C32;
+  color: #EEEEEE;
+  font-size: 20px;
+  border: 1px solid #FF8C32;
+  cursor: pointer;
+}
+#top.page-issn-checker .avia_codeblock button:hover {
+  background-color: #06113c;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn {
+  margin-top: 25px;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn #author_holder {
+  background-color: #06113C;
+  padding: 20px;
+  font-size: 28px;
+  line-height: 36px;
+  color: #EEEEEE;
+  border-radius: 10px;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder {
+  display: flex;
+  flex-direction: row;
+  margin-top: 25px;
+  background-color: #FF8C32;
+  border-radius: 10px;
+  padding: 20px;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .issn_holder_data, #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .title_holder, #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .top_rank_holder {
+  width: 33%;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .title_holder {
+  font-size: 22px;
+  line-height: 26px;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .top_rank_holder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 28px;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .issn_holder_data {
+  font-size: 20px;
+  line-height: 26px;
+}
+#top.page-issn-checker #input-field-data-holder-issn, #top.page-issn-checker #input-field-author {
+  border-color: #FF8C32;
+}
+#top.single-post #main {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+#top.single-post #main .journal_main_info {
+  text-align: center;
+  background-color: #06113C;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+#top.single-post #main .journal_main_info h1 {
+  font-size: 45px;
+  padding-bottom: 15px;
+  color: #EEEEEE;
+}
+#top.single-post #main .journal_main_info h2 {
+  font-size: 38px;
+  color: #DDDDDD;
+}
+#top.single-post #main .first_row {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: row;
+  background-color: #FF8C32;
+  border-radius: 10px;
+  padding: 30px 0;
+}
+#top.single-post #main .first_row .country, #top.single-post #main .first_row .subject-category, #top.single-post #main .first_row .h_index {
+  text-align: center;
+  width: 33%;
+}
+#top.single-post #main .first_row .country {
+  display: flex;
+  flex-direction: column;
+}
+#top.single-post #main .first_row .country .country-fake, #top.single-post #main .first_row .country .country-real {
+  height: 50%;
+}
+
+/*# sourceMappingURL=custom.css.map */

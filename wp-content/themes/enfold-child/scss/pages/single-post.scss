@@ -1,0 +1,54 @@
+&.single-post {
+  #main {
+    max-width: 1400px;
+    margin: 0 auto;
+    //background: $journalorange;
+
+    .journal_main_info {
+
+      text-align: center;
+      background-color: $journalblue;
+      border-radius: 10px;
+      padding: 10px 0;
+
+      h1 {
+        font-size: 45px;
+        padding-bottom: 15px;
+        color: $journalwhite;
+      }
+
+      h2 {
+        font-size: 38px;
+        color: $journalgray;
+      }
+
+    }
+
+    .first_row {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: row;
+      background-color: $journalorange;
+      border-radius: 10px;
+      padding: 30px 0;
+
+      .country, .subject-category, .h_index {
+        text-align: center;
+        width: 33%;
+      }
+
+      .country {
+        display: flex;
+        flex-direction: column;
+
+        .country-fake, .country-real {
+          height: 50%;
+        }
+
+      }
+
+    }
+
+
+  }
+}
