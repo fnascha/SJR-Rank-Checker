@@ -1,6 +1,6 @@
 # Scientific journal rankings according to categories
 
-Scientific Paper Search and Ranking Website
+Scientific Journal Search and Ranking Website
 
 ## Overview
 
@@ -27,7 +27,7 @@ This project is the bachelor thesis of Fekete Dániel, a Sapientia Informatics s
 
 The website is available at: [https://rankchecker.imok.space/](https://rankchecker.imok.space/)
 
-**Note: The site is password protected. Please contact me if you wish to use it.**
+**Please note that the site is password protected. If you would like to access it, kindly contact me for the necessary credentials.**
 
 Use the following steps to utilize the website:
 
