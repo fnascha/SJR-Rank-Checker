@@ -24,7 +24,7 @@
 
     }
 
-    .first_row {
+    .first_row, .second_row {
       margin-top: 25px;
       display: flex;
       flex-direction: row;
@@ -32,23 +32,22 @@
       border-radius: 10px;
       padding: 30px 0;
 
-      .country, .subject-category, .h_index {
+      h5 {
+        font-size: 24px;
+        line-height: 28px;
+      }
+
+      h3, ul > li {
+        font-size: 20px;
+        line-height: 26px;
+      }
+
+      .best_cat, .subject-category, .sjr_index, .country, .issn, .h_index {
         text-align: center;
         width: 33%;
       }
 
-      .country {
-        display: flex;
-        flex-direction: column;
-
-        .country-fake, .country-real {
-          height: 50%;
-        }
-
-      }
-
     }
-
 
   }
 }

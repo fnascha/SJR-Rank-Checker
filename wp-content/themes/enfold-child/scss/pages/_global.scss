@@ -1,0 +1,44 @@
+@media print {
+  body.show-pf-branding {
+    #printfriendly {
+      #response_holder_issn {
+        margin-top: 25px !important;
+
+        #author_holder {
+          background-color: $journalblue !important;
+          padding: 20px !important;
+          font-size: 28px !important;
+          line-height: 36px !important;
+          color: $journalwhite !important;
+          border-radius: 10px !important;
+        }
+
+        #issn_holder {
+          display: flex !important;
+          flex-direction: row !important;
+          margin-top: 25px !important;
+          background-color: $journalorange !important;
+          border-radius: 10px !important;
+          padding: 20px !important;
+
+          .issn_holder_data, .title_holder, .top_rank_holder {
+            width: 33% !important;
+          }
+
+          .top_rank_holder {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+
+
+            strong {
+              color: black !important;
+            }
+          }
+
+
+        }
+      }
+    }
+  }
+}

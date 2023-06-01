@@ -33,10 +33,11 @@
 
     #response_holder_issn {
       margin-top: 25px;
+      margin-bottom: 25px;
 
-      #author_holder{
+      #author_holder {
         background-color: $journalblue;
-        padding:20px;
+        padding: 20px;
         font-size: 28px;
         line-height: 36px;
         color: $journalwhite;
@@ -50,6 +51,9 @@
         background-color: $journalorange;
         border-radius: 10px;
         padding: 20px;
+        justify-content: center;
+        font-size: 18px;
+        position: relative;
 
         .issn_holder_data, .title_holder, .top_rank_holder {
           width: 33%;
@@ -66,17 +70,70 @@
           justify-content: center;
           font-size: 22px;
           line-height: 28px;
+
+          strong {
+            color: black;
+          }
         }
 
-        .issn_holder_data,{
+        span.bold {
+          font-size: 24px;
+          font-weight: bold;
+        }
+
+        .issn_holder_data {
           font-size: 20px;
           line-height: 26px;
+        }
+
+        #journal_add, #journal_edit {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          width: 32px;
+          height: 32px;
+          padding: 0;
+          border-radius: 15px;
         }
       }
     }
   }
+
   #input-field-data-holder-issn, #input-field-author {
     border-color: $journalorange;
+  }
+
+  #journal_list_add_form_popup, #journal_list_edit_form_popup {
+    position: fixed;
+    width: 80%;
+    height: 80%;
+    top: calc(50% + 50px);
+    left: 50%;
+    background-color: #e1e1e1;
+    overflow-y: auto;
+    transform: translate(-50%, -50%);
+
+    #close_popup_edit, #close_popup_add {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+    }
+
+    #journal_list_add_form, #journal_list_edit_form {
+      padding: 25px;
+
+      h1 {
+        color: black;
+      }
+
+      .input_field_holder {
+        padding: 50px;
+      }
+
+    }
   }
 
 }

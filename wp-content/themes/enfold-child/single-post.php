@@ -2,7 +2,6 @@
 
 if (have_posts()) :
     while (have_posts()) : the_post();
-
         /**
          * Getting the post fields
          */
@@ -16,7 +15,6 @@ if (have_posts()) :
         $coverage = get_field('coverage', $post_id);
         $issn = get_field('issn', $post_id);
         $categoryes = get_the_category($post_id);
-
         get_header();
         ?>
 
@@ -32,9 +30,9 @@ if (have_posts()) :
             <div class="data_container">
 
                 <div class="first_row">
-                    <div class="h_index">
-                        <h5>H-INDEX:</h5>
-                        <h3><?php echo $hIndex; ?></h3>
+                    <div class="sjr_index">
+                        <h5>SJR:</h5>
+                        <h3><?php echo $sjr; ?></h3>
                     </div>
 
                     <div class="subject-category">
@@ -50,34 +48,47 @@ if (have_posts()) :
                             ?></ul>
                     </div>
 
-                    <div class="country">
-                        <div class="country-real">
-                            <h5>Country:</h5>
-                            <h3><?php echo $country; ?></h3>
-                        </div>
-                        <div class="country-fake">
-                            <h5>Personal Best:</h5>
-                            <h3><?php $flag = 101;
-                                foreach ($categoryes as $category) {
-                                    $valuenumber = get_the_order_by_sjr($category->slug, $post_id) * 100;
+                    <div class="best_cat">
 
-                                    if ($valuenumber <= $flag) {
-                                        $flag = $valuenumber;
-                                    }
-                                    ?>
-                                    <?php
+                        <h5>Personal Best:</h5>
+                        <h3><?php $flag = 101;
+                            foreach ($categoryes as $category) {
+                                $valuenumber = get_the_order_by_sjr($category->slug, $post_id) * 100;
+
+                                if ($valuenumber <= $flag) {
+                                    $flag = $valuenumber;
                                 }
-                                echo get_rank($flag);
-                                ?></h3>
-                        </div>
-
-
+                                ?>
+                                <?php
+                            }
+                            echo get_rank($flag);
+                            ?></h3>
                     </div>
                 </div>
 
             </div>
-        </div>
 
+            <div class="data_container_2">
+
+                <div class="second_row">
+                    <div class="h_index">
+                        <h5>H-Index:</h5>
+                        <h3><?php echo $hIndex; ?></h3>
+                    </div>
+
+                    <div class="issn">
+                        <h5>ISSN:</h5>
+                        <h3><?php echo $issn; ?></h3>
+                    </div>
+
+                    <div class="country">
+
+                        <h5>Country:</h5>
+                        <h3><?php echo $country; ?></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <?php
     endwhile;

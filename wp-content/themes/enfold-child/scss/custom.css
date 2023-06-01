@@ -1,20 +1,52 @@
-#top.home h1 {
+@media print {
+  #top body.show-pf-branding #printfriendly #response_holder_issn {
+    margin-top: 25px !important;
+  }
+  #top body.show-pf-branding #printfriendly #response_holder_issn #author_holder {
+    background-color: #06113C !important;
+    padding: 20px !important;
+    font-size: 28px !important;
+    line-height: 36px !important;
+    color: #EEEEEE !important;
+    border-radius: 10px !important;
+  }
+  #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder {
+    display: flex !important;
+    flex-direction: row !important;
+    margin-top: 25px !important;
+    background-color: #FF8C32 !important;
+    border-radius: 10px !important;
+    padding: 20px !important;
+  }
+  #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .issn_holder_data, #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .title_holder, #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .top_rank_holder {
+    width: 33% !important;
+  }
+  #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .top_rank_holder {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .top_rank_holder strong {
+    color: black !important;
+  }
+}
+#top.home h1, #top.page-check-journalist-rank h1 {
   font-size: 45px;
   padding-bottom: 15px;
   color: #EEEEEE;
 }
-#top.home h2 {
+#top.home h2, #top.page-check-journalist-rank h2 {
   font-size: 38px;
   color: #FF8C32;
 }
-#top.home .avia_codeblock {
+#top.home .avia_codeblock, #top.page-check-journalist-rank .avia_codeblock {
   text-align: center;
 }
-#top.home .avia_codeblock form {
+#top.home .avia_codeblock form, #top.page-check-journalist-rank .avia_codeblock form {
   width: 50%;
   margin: 0 auto;
 }
-#top.home .avia_codeblock button {
+#top.home .avia_codeblock button, #top.page-check-journalist-rank .avia_codeblock button {
   padding: 10px 8px;
   background-color: #FF8C32;
   color: #EEEEEE;
@@ -22,21 +54,21 @@
   border: 1px solid #FF8C32;
   cursor: pointer;
 }
-#top.home .avia_codeblock button:hover {
+#top.home .avia_codeblock button:hover, #top.page-check-journalist-rank .avia_codeblock button:hover {
   background-color: #06113c;
 }
-#top.home .avia_codeblock #response_holder {
+#top.home .avia_codeblock #response_holder, #top.page-check-journalist-rank .avia_codeblock #response_holder {
   margin-top: 25px;
 }
-#top.home .avia_codeblock #response_holder tr {
+#top.home .avia_codeblock #response_holder tr, #top.page-check-journalist-rank .avia_codeblock #response_holder tr {
   display: flex;
   width: 70%;
   margin: 0 auto;
 }
-#top.home .avia_codeblock #response_holder tr td {
+#top.home .avia_codeblock #response_holder tr td, #top.page-check-journalist-rank .avia_codeblock #response_holder tr td {
   width: 100%;
 }
-#top.home #input-field-data-holder {
+#top.home #input-field-data-holder, #top.page-check-journalist-rank #input-field-data-holder {
   border-color: #FF8C32;
 }
 #top.page-issn-checker h1 {
@@ -68,6 +100,7 @@
 }
 #top.page-issn-checker .avia_codeblock #response_holder_issn {
   margin-top: 25px;
+  margin-bottom: 25px;
 }
 #top.page-issn-checker .avia_codeblock #response_holder_issn #author_holder {
   background-color: #06113C;
@@ -84,6 +117,9 @@
   background-color: #FF8C32;
   border-radius: 10px;
   padding: 20px;
+  justify-content: center;
+  font-size: 18px;
+  position: relative;
 }
 #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .issn_holder_data, #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .title_holder, #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .top_rank_holder {
   width: 33%;
@@ -99,12 +135,55 @@
   font-size: 22px;
   line-height: 28px;
 }
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .top_rank_holder strong {
+  color: black;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder span.bold {
+  font-size: 24px;
+  font-weight: bold;
+}
 #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .issn_holder_data {
   font-size: 20px;
   line-height: 26px;
 }
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder #journal_add, #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder #journal_edit {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 15px;
+}
 #top.page-issn-checker #input-field-data-holder-issn, #top.page-issn-checker #input-field-author {
   border-color: #FF8C32;
+}
+#top.page-issn-checker #journal_list_add_form_popup, #top.page-issn-checker #journal_list_edit_form_popup {
+  position: fixed;
+  width: 80%;
+  height: 80%;
+  top: calc(50% + 50px);
+  left: 50%;
+  background-color: #e1e1e1;
+  overflow-y: auto;
+  transform: translate(-50%, -50%);
+}
+#top.page-issn-checker #journal_list_add_form_popup #close_popup_edit, #top.page-issn-checker #journal_list_add_form_popup #close_popup_add, #top.page-issn-checker #journal_list_edit_form_popup #close_popup_edit, #top.page-issn-checker #journal_list_edit_form_popup #close_popup_add {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+#top.page-issn-checker #journal_list_add_form_popup #journal_list_add_form, #top.page-issn-checker #journal_list_add_form_popup #journal_list_edit_form, #top.page-issn-checker #journal_list_edit_form_popup #journal_list_add_form, #top.page-issn-checker #journal_list_edit_form_popup #journal_list_edit_form {
+  padding: 25px;
+}
+#top.page-issn-checker #journal_list_add_form_popup #journal_list_add_form h1, #top.page-issn-checker #journal_list_add_form_popup #journal_list_edit_form h1, #top.page-issn-checker #journal_list_edit_form_popup #journal_list_add_form h1, #top.page-issn-checker #journal_list_edit_form_popup #journal_list_edit_form h1 {
+  color: black;
+}
+#top.page-issn-checker #journal_list_add_form_popup #journal_list_add_form .input_field_holder, #top.page-issn-checker #journal_list_add_form_popup #journal_list_edit_form .input_field_holder, #top.page-issn-checker #journal_list_edit_form_popup #journal_list_add_form .input_field_holder, #top.page-issn-checker #journal_list_edit_form_popup #journal_list_edit_form .input_field_holder {
+  padding: 50px;
 }
 #top.single-post #main {
   max-width: 1400px;
@@ -125,7 +204,7 @@
   font-size: 38px;
   color: #DDDDDD;
 }
-#top.single-post #main .first_row {
+#top.single-post #main .first_row, #top.single-post #main .second_row {
   margin-top: 25px;
   display: flex;
   flex-direction: row;
@@ -133,16 +212,55 @@
   border-radius: 10px;
   padding: 30px 0;
 }
-#top.single-post #main .first_row .country, #top.single-post #main .first_row .subject-category, #top.single-post #main .first_row .h_index {
+#top.single-post #main .first_row h5, #top.single-post #main .second_row h5 {
+  font-size: 24px;
+  line-height: 28px;
+}
+#top.single-post #main .first_row h3, #top.single-post #main .first_row ul > li, #top.single-post #main .second_row h3, #top.single-post #main .second_row ul > li {
+  font-size: 20px;
+  line-height: 26px;
+}
+#top.single-post #main .first_row .best_cat, #top.single-post #main .first_row .subject-category, #top.single-post #main .first_row .sjr_index, #top.single-post #main .first_row .country, #top.single-post #main .first_row .issn, #top.single-post #main .first_row .h_index, #top.single-post #main .second_row .best_cat, #top.single-post #main .second_row .subject-category, #top.single-post #main .second_row .sjr_index, #top.single-post #main .second_row .country, #top.single-post #main .second_row .issn, #top.single-post #main .second_row .h_index {
   text-align: center;
   width: 33%;
 }
-#top.single-post #main .first_row .country {
-  display: flex;
-  flex-direction: column;
+#top.page-journals-list h1 {
+  font-size: 45px;
+  padding-bottom: 15px;
+  color: #EEEEEE;
 }
-#top.single-post #main .first_row .country .country-fake, #top.single-post #main .first_row .country .country-real {
-  height: 50%;
+#top.page-journals-list h2 {
+  font-size: 38px;
+  color: #FF8C32;
+}
+#top.page-journals-list .journal_listing_article .full-content-1 {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+#top.page-journals-list .journal_listing_article .full-content-1 .journal_title {
+  text-align: center;
+  border-top-right-radius: 5px;
+}
+#top.page-journals-list .journal_listing_article .full-content-1 .journal_title h3 {
+  font-size: 22px;
+  margin-bottom: 0;
+  text-align: center;
+  padding: 10px;
+}
+#top.page-journals-list .journal_listing_article .full-content-2 {
+  background-color: #FF8C32;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  display: flex;
+  margin-bottom: 15px;
+  padding: 20px;
+}
+#top.page-journals-list .journal_listing_article .full-content-2 .sjr-holder, #top.page-journals-list .journal_listing_article .full-content-2 .hindex-holder, #top.page-journals-list .journal_listing_article .full-content-2 .toprank-holder {
+  width: 33%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 /*# sourceMappingURL=custom.css.map */
