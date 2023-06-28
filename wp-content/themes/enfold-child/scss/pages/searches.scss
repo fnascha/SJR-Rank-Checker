@@ -1,0 +1,67 @@
+&.post-type-archive-searches, &.page-searches-sql {
+
+  h1 {
+    font-size: 45px;
+    padding-bottom: 15px;
+    color: #EEEEEE;
+    font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  #header-title {
+    background-color: #06113c;
+    min-height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+
+    div.title {
+      max-width: 1310px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+
+  .divider {
+    height: 8%;
+  }
+
+
+  .single-search {
+    margin-top: 25px;
+    text-align: center;
+
+    .title-holder {
+      padding: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      background-color: #FF8C32;
+
+      h2 {
+        color: #EEEEEE;
+        margin: 0;
+      }
+    }
+
+    ul.searches-holder {
+      background-color: #E1E1E1;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      padding: 10px;
+      margin: 0;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 5px;
+
+        span {
+          width: 33%;
+        }
+
+      }
+    }
+  }
+}

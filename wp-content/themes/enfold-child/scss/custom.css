@@ -1,75 +1,5 @@
-@media print {
-  #top body.show-pf-branding #printfriendly #response_holder_issn {
-    margin-top: 25px !important;
-  }
-  #top body.show-pf-branding #printfriendly #response_holder_issn #author_holder {
-    background-color: #06113C !important;
-    padding: 20px !important;
-    font-size: 28px !important;
-    line-height: 36px !important;
-    color: #EEEEEE !important;
-    border-radius: 10px !important;
-  }
-  #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder {
-    display: flex !important;
-    flex-direction: row !important;
-    margin-top: 25px !important;
-    background-color: #FF8C32 !important;
-    border-radius: 10px !important;
-    padding: 20px !important;
-  }
-  #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .issn_holder_data, #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .title_holder, #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .top_rank_holder {
-    width: 33% !important;
-  }
-  #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .top_rank_holder {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-  }
-  #top body.show-pf-branding #printfriendly #response_holder_issn #issn_holder .top_rank_holder strong {
-    color: black !important;
-  }
-}
-#top.home h1, #top.page-check-journalist-rank h1 {
-  font-size: 45px;
-  padding-bottom: 15px;
-  color: #EEEEEE;
-}
-#top.home h2, #top.page-check-journalist-rank h2 {
-  font-size: 38px;
-  color: #FF8C32;
-}
-#top.home .avia_codeblock, #top.page-check-journalist-rank .avia_codeblock {
-  text-align: center;
-}
-#top.home .avia_codeblock form, #top.page-check-journalist-rank .avia_codeblock form {
-  width: 50%;
-  margin: 0 auto;
-}
-#top.home .avia_codeblock button, #top.page-check-journalist-rank .avia_codeblock button {
-  padding: 10px 8px;
-  background-color: #FF8C32;
-  color: #EEEEEE;
-  font-size: 20px;
-  border: 1px solid #FF8C32;
-  cursor: pointer;
-}
-#top.home .avia_codeblock button:hover, #top.page-check-journalist-rank .avia_codeblock button:hover {
-  background-color: #06113c;
-}
-#top.home .avia_codeblock #response_holder, #top.page-check-journalist-rank .avia_codeblock #response_holder {
-  margin-top: 25px;
-}
-#top.home .avia_codeblock #response_holder tr, #top.page-check-journalist-rank .avia_codeblock #response_holder tr {
-  display: flex;
-  width: 70%;
-  margin: 0 auto;
-}
-#top.home .avia_codeblock #response_holder tr td, #top.page-check-journalist-rank .avia_codeblock #response_holder tr td {
-  width: 100%;
-}
-#top.home #input-field-data-holder, #top.page-check-journalist-rank #input-field-data-holder {
-  border-color: #FF8C32;
+#top #pdfButton {
+  display: none;
 }
 #top.page-issn-checker h1 {
   font-size: 45px;
@@ -98,6 +28,9 @@
 #top.page-issn-checker .avia_codeblock button:hover {
   background-color: #06113c;
 }
+#top.page-issn-checker .avia_codeblock #error-handler {
+  margin: 15px 0;
+}
 #top.page-issn-checker .avia_codeblock #response_holder_issn {
   margin-top: 25px;
   margin-bottom: 25px;
@@ -115,11 +48,15 @@
   flex-direction: row;
   margin-top: 25px;
   background-color: #FF8C32;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   padding: 20px;
   justify-content: center;
   font-size: 18px;
   position: relative;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder.failed {
+  border-radius: 10px;
 }
 #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .issn_holder_data, #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .title_holder, #top.page-issn-checker .avia_codeblock #response_holder_issn #issn_holder .top_rank_holder {
   width: 33%;
@@ -154,6 +91,21 @@
   height: 32px;
   padding: 0;
   border-radius: 15px;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn .added-data {
+  background-color: #E1E1E1;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn .added-data .all-data {
+  text-align: center;
+  width: 33%;
+}
+#top.page-issn-checker .avia_codeblock #response_holder_issn .added-data .bold {
+  font-weight: bold;
 }
 #top.page-issn-checker #input-field-data-holder-issn, #top.page-issn-checker #input-field-author {
   border-color: #FF8C32;
@@ -261,6 +213,58 @@
   justify-content: center;
   align-items: center;
   align-content: center;
+}
+#top.post-type-archive-searches h1, #top.page-searches-sql h1 {
+  font-size: 45px;
+  padding-bottom: 15px;
+  color: #EEEEEE;
+  font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#top.post-type-archive-searches #header-title, #top.page-searches-sql #header-title {
+  background-color: #06113c;
+  min-height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+#top.post-type-archive-searches #header-title div.title, #top.page-searches-sql #header-title div.title {
+  max-width: 1310px;
+  margin: 0 auto;
+  text-align: center;
+}
+#top.post-type-archive-searches .divider, #top.page-searches-sql .divider {
+  height: 8%;
+}
+#top.post-type-archive-searches .single-search, #top.page-searches-sql .single-search {
+  margin-top: 25px;
+  text-align: center;
+}
+#top.post-type-archive-searches .single-search .title-holder, #top.page-searches-sql .single-search .title-holder {
+  padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #FF8C32;
+}
+#top.post-type-archive-searches .single-search .title-holder h2, #top.page-searches-sql .single-search .title-holder h2 {
+  color: #EEEEEE;
+  margin: 0;
+}
+#top.post-type-archive-searches .single-search ul.searches-holder, #top.page-searches-sql .single-search ul.searches-holder {
+  background-color: #E1E1E1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 10px;
+  margin: 0;
+}
+#top.post-type-archive-searches .single-search ul.searches-holder li, #top.page-searches-sql .single-search ul.searches-holder li {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px;
+}
+#top.post-type-archive-searches .single-search ul.searches-holder li span, #top.page-searches-sql .single-search ul.searches-holder li span {
+  width: 33%;
 }
 
 /*# sourceMappingURL=custom.css.map */

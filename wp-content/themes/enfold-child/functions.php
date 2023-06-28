@@ -3,7 +3,7 @@
 function dani_style()
 {
     wp_enqueue_style('imokcss', get_stylesheet_directory_uri() . '/scss/custom.css', array());
-    wp_enqueue_script('imokjs', get_stylesheet_directory_uri() . '/js/imok.js', array(), '1.2.105', true);
+    wp_enqueue_script('imokjs', get_stylesheet_directory_uri() . '/js/imok.js', array(), '1.2.106', true);
     wp_localize_script('imokjs', 'rank_checker', ['admin_url' => admin_url('admin-ajax.php')]);
 //    wp_enqueue_script( 'jspPDF', get_stylesheet_directory_uri() . '/jsPDF-master/src/jspdf.js', array(), '1.5.3', true );
 
@@ -79,6 +79,8 @@ function issn_input_shortcode()
     $atts .= '</form>';
     $atts .= '<button type="button"  name="submit" class="search-on-pressed-issn" >Check</button>';
     $atts .= '</div>';
+    $atts .= '<div id="error-handler">';
+    $atts .= '</div>';
     $atts .= '<div id="response_holder_issn">';
     $atts .= '</div>';
 
@@ -140,6 +142,7 @@ function check_multiple_issn()
                     )
                 )
             );
+
             $journal_found = new WP_Query($args);
 
             if ($journal_found->have_posts()) {
@@ -148,6 +151,10 @@ function check_multiple_issn()
                     $response_title = get_the_title($post->ID);
                     $data_min = [];
                     $issn_without_space = str_replace(' ', '', $issn);
+
+                    $title_of_article = get_field('title_of_article', $post->ID);
+                    $number_of_editors = get_field('number_of_editors', $post->ID);
+                    $academic_year = get_field('academic_year', $post->ID);
 
                     $flag = 101;
                     foreach ($categoryes as $category) {
@@ -169,8 +176,10 @@ function check_multiple_issn()
                         "title" => $response_title,
                         "max_rank" => $response_max_rank,
                         "ranking" => $data_min,
-                        "post_id" => $post->ID
-
+                        "post_id" => $post->ID,
+                        "academic_year" => $academic_year,
+                        "number_of_editors" => $number_of_editors,
+                        "title_of_article" => $title_of_article
                     );
                 }
             } else {
@@ -286,43 +295,13 @@ function popup_form_shortcode_add()
                 }
                 ?><br><br>
 
-                <label for="rank">Rank:</label>
-                <input type="text" id="rank" name="rank"><br><br>
-
                 <label for="type">Type:</label>
                 <input type="text" id="type" name="type"> <br><br>
-
-                <label for="sjr">SJR:</label>
-                <input type="text" id="sjr" name="sjr"><br><br>
-
-                <label for="sjr_best_quartile">SJR bestquartile:</label>
-                <input type="text" id="sjr_best_quartile" name="sjr_best_quartile"><br><br>
-
-                <label for="h_index">H Index:</label>
-                <input type="text" id="h_index" name="h_index"><br><br>
-
-                <label for="total_docs_2021">Total Docs 2021:</label>
-                <input type="text" id="total_docs_2021" name="total_docs_2021"><br><br>
-
-                <label for="total_docs_3_years">Total Docs 3 Years:</label>
-                <input type="text" id="total_docs_3_years" name="total_docs_3_years"><br><br>
-
-                <label for="total_refs">Total Refs:</label>
-                <input type="text" id="total_refs" name="total_refs"><br><br>
-
-                <label for="country">Country:</label>
-                <input type="text" id="country" name="country"><br><br>
-
-                <label for="region">Region:</label>
-                <input type="text" id="region" name="region"><br><br>
 
                 <label for="publisher">Publisher:</label>
                 <input type="text" id="publisher" name="publisher"><br><br>
 
-                <label for="coverage">Coverage:</label>
-                <input type="text" id="coverage" name="coverage"><br><br>
-
-                <input type="submit" value="Create Post">
+                <input type="submit" value="Create Journal">
             </div>
         </form>
     </div>
@@ -345,8 +324,12 @@ function popup_form_shortcode_edit()
                 <input type="text" id="titleInput" name="titleInput">
             </div>
             <div>
-                <label for="editorsInput">Number of Editors:</label>
+                <label for="editorsInput">Number of Authors:</label>
                 <input type="number" id="editorsInput" name="editorsInput">
+            </div>
+            <div>
+                <label for="academicYear">Academic Year:</label>
+                <input type="number" id="academicYear" name="academicYear">
             </div>
             <div>
                 <button type="submit">Save</button>
@@ -368,19 +351,8 @@ function create_journal_post()
     // Retrieve form data from AJAX request
     $title = $_POST['title'];
     $categories = $_POST['categories'];
-    $rank = $_POST['rank'];
     $type = $_POST['type'];
-    $issn = $_POST['issn'];
-    $sjr = $_POST['sjr'];
-    $sjr_best_quartile = $_POST['sjr_best_quartile'];
-    $h_index = $_POST['h_index'];
-    $total_docs_2021 = $_POST['total_docs_2021'];
-    $total_docs_3_years = $_POST['total_docs_3_years'];
-    $total_refs = $_POST['total_refs'];
-    $country = $_POST['country'];
-    $region = $_POST['region'];
     $publisher = $_POST['publisher'];
-    $coverage = $_POST['coverage'];
 
     foreach ($categories as $slug) {
         $category = get_category_by_slug($slug);
@@ -400,19 +372,8 @@ function create_journal_post()
     $post_id = wp_insert_post($post_data);
 
     // Update ACF fields
-    update_field('rank', $rank, $post_id);
     update_field('type', $type, $post_id);
-    update_field('issn', $issn, $post_id);
-    update_field('sjt', $sjr, $post_id);
-    update_field('sjr_best_quartile', $sjr_best_quartile, $post_id);
-    update_field('h_index', $h_index, $post_id);
-    update_field('total_docs_2021', $total_docs_2021, $post_id);
-    update_field('total_docs_3_years', $total_docs_3_years, $post_id);
-    update_field('total_refs', $total_refs, $post_id);
-    update_field('country', $country, $post_id);
-    update_field('region', $region, $post_id);
     update_field('publisher', $publisher, $post_id);
-    update_field('coverage', $coverage, $post_id);
 
     // Return the newly created post ID
     echo $post_id;
@@ -424,26 +385,52 @@ function create_journal_post()
 // Handle AJAX request to save ACF fields
 add_action('wp_ajax_save_journal_fields', 'save_journal_fields');
 add_action('wp_ajax_nopriv_save_journal_fields', 'save_journal_fields');
-function save_journal_fields()
-{
+function save_journal_fields() {
     // Verify nonce or perform any necessary security checks
 
     // Retrieve the data from the AJAX request
     $post_id = $_POST['post_id'];
     $writers_number = $_POST['writers_number'];
     $article_title = $_POST['article_title'];
+    $academic_year = $_POST['academic_year'];
 
-    // Update ACF fields for the post
-    update_field('number_of_editors', $writers_number, $post_id);
-    update_field('title_of_article', $article_title, $post_id);
+    // Check if a post with the same "title_of_article" exists but different "academic_year"
+    $existing_post = get_posts(array(
+        'post_type' => 'post',
+        'posts_per_page' => 1,
+        'meta_query' => array(
+            array(
+                'key' => 'title_of_article',
+                'value' => $article_title,
+                'compare' => 'LIKE',
+            ),
+            array(
+                'key' => 'academic_year',
+                'value' => $academic_year,
+                'compare' => '!=',
+            ),
+        ),
+    ));
 
-    // Return a response if needed
-    wp_send_json_success('ACF fields updated successfully.');
+    // If a post with the same "title_of_article" but different "academic_year" is found, return an error
+    if (!empty($existing_post)) {
+        wp_send_json_error('A post with the same title but different academic year already exists.');
+        die;
+    }else{
+        // Update ACF fields for the post
+        update_field('number_of_editors', $writers_number, $post_id);
+        update_field('title_of_article', $article_title, $post_id);
+        update_field('academic_year', $academic_year, $post_id);
+
+        // Return a success response
+        wp_send_json_success('ACF fields updated successfully.');
+    }
 }
 
 // Handle AJAX request to get current ACF field values
 add_action('wp_ajax_get_journal_fields', 'get_journal_fields');
 add_action('wp_ajax_nopriv_get_journal_fields', 'get_journal_fields');
+
 function get_journal_fields()
 {
     // Verify nonce or perform any necessary security checks
@@ -453,11 +440,218 @@ function get_journal_fields()
     // Get the current ACF field values for the post
     $writers_number = get_field('number_of_editors', $post_id);
     $article_title = get_field('title_of_article', $post_id);
+    $academic_year = get_field('academic_year', $post_id);
 
     // Return the ACF field values as the response
 
     wp_send_json_success(array(
         'writers_number' => $writers_number,
-        'article_title' => $article_title
+        'article_title' => $article_title,
+        'academic_year' => $academic_year
     ));
+}
+
+function save_search_ajax_handler()
+{
+    if (isset($_POST['author']) && isset($_POST['journals'])) {
+        $author = $_POST['author'];
+        $journals = $_POST['journals'];
+
+        // Check if the search query already exists as a post title
+        $existing_post = get_page_by_title($author, OBJECT, 'searches');
+        if ($existing_post) {
+            // Get the existing post ID
+            $post_id = $existing_post->ID;
+
+            // Check if journals repeater field exists
+            if (!get_field('searched_journals', $post_id)) {
+                add_journals_to_repeater($journals, $post_id);
+                wp_send_json_success('Search saved successfully');
+            }
+
+            // Check if the new journal data already exists in the repeater field
+            $existing_journal = get_field('searched_journals', $post_id);
+            $existing_journal_ids = array_column($existing_journal, 'the_journal');
+
+            $new_journals = array_filter($journals, function ($journal) use ($existing_journal_ids) {
+                return !in_array($journal['post_id'], $existing_journal_ids);
+            });
+
+            if (empty($new_journals)) {
+                wp_send_json_success('Search already exists in our database');
+            } else {
+                foreach ($new_journals as $journal) {
+                    $journal_exists = false;
+
+                    foreach ($existing_journal as $existing) {
+                        if ($existing['the_journal'] === $journal['post_id']) {
+                            $journal_exists = true;
+                            break;
+                        }
+                    }
+
+
+                    if (!$journal_exists) {
+                        add_row('searched_journals', array(
+                            'max_rank' => $journal['max_rank'],
+                            'the_journal' => $journal['post_id'],
+                            'date_of_addition' => date('Y-m-d H:i:s')
+                        ), $post_id);
+                    }
+                }
+
+                wp_send_json_success('Search saved successfully');
+            }
+        } else {
+            // Create a new post if the search query doesn't exist
+            $post_data = array(
+                'post_title' => $author,
+                'post_type' => 'searches',
+                'post_status' => 'publish'
+            );
+
+            $post_id = wp_insert_post($post_data);
+
+            if (is_wp_error($post_id)) {
+                wp_send_json_error('Error saving search');
+            } else {
+                add_journals_to_repeater($journals, $post_id);
+                wp_send_json_success('Search saved successfully');
+            }
+        }
+    } else {
+        wp_send_json_error('Invalid request');
+    }
+}
+
+function add_journals_to_repeater($journals, $post_id)
+{
+    foreach ($journals as $journal) {
+        $existing_journal = get_field('searched_journals', $post_id);
+        $journal_exists = false;
+
+        if ($existing_journal) {
+            foreach ($existing_journal as $existing) {
+                if ($existing['the_journal'] === $journal['post_id']) {
+                    $journal_exists = true;
+                    break;
+                }
+            }
+        }
+
+        if (!$journal_exists) {
+            add_row('searched_journals', array(
+                'max_rank' => $journal['max_rank'],
+                'the_journal' => $journal['post_id'],
+                'date_of_addition' => date('Y-m-d H:i:s')
+            ), $post_id);
+        }
+    }
+}
+
+add_action('wp_ajax_save_search', 'save_search_ajax_handler');
+add_action('wp_ajax_nopriv_save_search', 'save_search_ajax_handler');
+
+// AJAX kérés kezelése a kereséshez
+add_action('wp_ajax_my_search_function', 'my_search_function');
+add_action('wp_ajax_nopriv_my_search_function', 'my_search_function');
+
+function my_search_function()
+{
+    $search_term = $_POST['search_input'];
+    $data_success = array();
+
+    if (strlen($search_term) <= 1) {
+        wp_send_json_error('Too short, minimum characters: 4', 404);
+    } else {
+        $args = array(
+            'post_type' => 'searches',
+            'posts_per_page' => -1,
+            's' => $search_term
+        );
+
+        $args_all = array(
+            'post_type' => 'searches',
+            'posts_per_page' => -1,
+        );
+
+
+        $journals = new WP_Query($args);
+        $journals_all = new WP_Query($args_all);
+
+        if ($journals->have_posts()) {
+            foreach ($journals->posts as $journal) {
+
+                $title = get_the_title($journal->ID);
+
+                // Searched Journals repeater field
+                $searched_journals = get_field('searched_journals', $journal->ID);
+
+                if ($searched_journals) {
+                    foreach ($searched_journals as $searched_journal) {
+
+                        $the_journal_id = $searched_journal['the_journal'];
+                        $the_journal_title = get_the_title($the_journal_id);
+                        $academic_year = get_field('academic_year', $the_journal_id);
+                        $max_rank = $searched_journal['max_rank'];
+
+                        $data_of_subbfields[] = array(
+                            "title" => $the_journal_title,
+                            "max_rank" => $max_rank,
+                            "academic_year" => $academic_year
+
+                        );
+
+                    }
+                }
+
+                $data_success[] = array(
+                    "author" => $title,
+                    "data_of_journals" => $data_of_subbfields,
+                );
+
+            }
+        } else {
+            foreach ($journals_all->posts as $journal) {
+                $title = get_the_title($journal->ID);
+
+                // Searched Journals repeater field
+                $searched_journals = get_field('searched_journals', $journal->ID);
+
+                if ($searched_journals) {
+                    foreach ($searched_journals as $searched_journal) {
+
+                        $the_journal_id = $searched_journal['the_journal'];
+                        $the_journal_title = get_the_title($the_journal_id);
+                        $academic_year = get_field('academic_year', $the_journal_id);
+                        $max_rank = $searched_journal['max_rank'];
+
+                        if ($academic_year === $search_term || $max_rank === strtoupper($search_term)) {
+                            $data_of_subbfields[] = array(
+                                "title" => $the_journal_title,
+                                "max_rank" => $max_rank,
+                                "academic_year" => $academic_year
+                            );
+                        }
+                    }
+                }
+
+                $data_success[] = array(
+                    "author" => $title,
+                    "data_of_journals" => $data_of_subbfields,
+                );
+
+            }
+        }
+        wp_reset_postdata();
+
+    }
+
+    if ($data_success) {
+        echo json_encode($data_success);
+        die;
+    } else {
+        echo 'No results found.';
+        die;
+    }
 }

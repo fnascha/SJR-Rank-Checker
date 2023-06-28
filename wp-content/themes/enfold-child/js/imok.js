@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-
+    $ = jQuery;
     /**This is for PDF Save the page **/
 
     $('#pdfButton').click(function () {
@@ -81,8 +81,6 @@ jQuery(document).ready(function ($) {
         $("#response_holder_issn").html("");
 
         /** Checking if the input fields is valid **/
-
-
         $.ajax({
             type: 'POST',
             url: rank_checker.admin_url,
@@ -95,6 +93,37 @@ jQuery(document).ready(function ($) {
                 output = [];
 
                 if (Array.isArray(data[0].succes_data)) {
+
+                    if (author_input !== '') {
+                        jQuery.ajax({
+                            url: rank_checker.admin_url,
+                            type: 'POST',
+                            data: {
+                                action: 'save_search',
+                                author: author_input,
+                                journals: data[0].succes_data,
+                            },
+                            success: function (response) {
+                                console.log(response)
+                                output = '<h6>' + response.data + '</h6>';
+                                $('#error-handler').append(output);
+                                $('#error-handler').show();
+                                setTimeout(function () {
+                                    $('#error-handler').hide();
+                                }, 5000);
+                            },
+                            error: function (xhr, status, error) {
+                                // Handle error response
+                                output = '<h2>' + error + '</h2>';
+                                $('#error-handler').append(output);
+                                $('#error-handler').show();
+                                setTimeout(function () {
+                                    $('#error-handler').hide();
+                                }, 5000);
+                            }
+                        });
+                    }
+
                     $.each(data[0].succes_data, function (i) {
                         $data_single = data[0].succes_data;
                         output += '<div id="issn_holder">' + '<div class="title_holder">' + $data_single[i].title + '</div>';
@@ -104,12 +133,27 @@ jQuery(document).ready(function ($) {
                         });
                         output += '</div>';
                         output += '<div class="top_rank_holder">' + '<span>Top Rank:</span>' + '<span class="bold">' + $data_single[i].max_rank + '</span>' + '</div>' + '<button  onclick="editJournal(event)" id="journal_edit" data_postID="' + $data_single[i].post_id + '" >+</button>' + '</div>';
+
+                        //checking if has custom data saved
+                        if ($data_single[i].title_of_article || $data_single[i].number_of_editors || $data_single[i].academic_year) {
+                            output += '<div class="added-data">';
+                            if ($data_single[i].title_of_article) {
+                                output += '<span class="all-data"> Article Title:  <span class="bold">' + $data_single[i].title_of_article + '</span> </span>';
+                            }
+                            if ($data_single[i].number_of_editors) {
+                                output += '<span class="all-data"> Number of Editors:  <span class="bold">' + $data_single[i].number_of_editors + '</span> </span>';
+                            }
+                            if ($data_single[i].academic_year) {
+                                output += '<span class="all-data"> Academic Year:  <span class="bold">' + $data_single[i].academic_year + '</span> </span>';
+                            }
+                            output += '</div>';
+                        }
                     });
                 }
                 if (data[0].failed_issn !== null) {
                     $.each(data[0].failed_issn, function (i) {
                         $data_single_issn = data[0].failed_issn;
-                        output += '<div id="issn_holder">' + '<span>' + $data_single_issn[i].failed_issn + ' not found in Scimago' + '</span>' + '<button  onclick="addJournal(event)" id="journal_add"  data_issn="' + $data_single_issn[i].failed_issn + '">+</button>' + '</div>';
+                        output += '<div id="issn_holder" class="failed">' + '<span>' + $data_single_issn[i].failed_issn + ' not found in our database, add this by clicking the + on the top right corner' + '</span>' + '<button  onclick="addJournal(event)" id="journal_add"  data_issn="' + $data_single_issn[i].failed_issn + '">+</button>' + '</div>';
                     });
                 }
 
@@ -128,8 +172,73 @@ jQuery(document).ready(function ($) {
         });
     });
 
+    if ($("body").hasClass("page-searches-sql")) {
+
+        $('#searchButton').click(function (e) {
+                e.preventDefault();
+
+                var searchInput = $('#searchInput').val();
+
+                $.ajax({
+                    url: rank_checker.admin_url,
+                    type: 'POST',
+                    data: {
+                        action: 'my_search_function',
+                        search_input: searchInput
+                    },
+                    success: function (data) {
+                        output = [];
+                        var searchDiv = $('#searchResults');
+                        searchDiv.empty();
+                        var counter = 0;
+
+                        var data_converted = JSON.parse(data);
+                        $.each(data_converted, function (i) {
+                            if (data_converted[i].data_of_journals !== null) {
+                                counter++;
+
+                                output += '<div class="single-search">' + '<div class="title-holder"><h2>' + data_converted[i].author + '</h2></div>';
+                                output += '<ul class="searches-holder">';
+                                $.each(data_converted[i].data_of_journals, function (j) {
+                                    output += '<li> <span>' + data_converted[i].data_of_journals[j].title + '</span>';
+                                    output += '<span> Max Rank: ' + data_converted[i].data_of_journals[j].max_rank + '</span>';
+
+                                    if (data_converted[i].data_of_journals[j].academic_year) {
+                                        output += '<span> Academic Year:  ' + data_converted[i].data_of_journals[j].academic_year + '</span>';
+                                    } else {
+                                        output += '<span> Academic Year not set </span>';
+                                    }
+                                });
+                                output += '</ul>';
+                                output += '</div>';
+                            }
+
+                        });
+                        if (counter === 0) {
+                            output += '<h2>No search found</h2>';
+                        }
+
+                        searchDiv.append(output);
+                    },
+                    error: function (error) {
+                        output += '<h2>No search found</h2>';
+                        searchDiv.append(output);
+                    }
+                });
+            }
+        )
+        ;
+
+    }
+
+    if ($("body").hasClass("page-issn-checker")) {
+        //Call the PDF watcher
+        watchDivAndToggleDisplay('response_holder_issn', 'pdfButton');
+    }
+
     console.log("Js loaded...")
-});
+})
+;
 
 function addJournal(e) {
     let data_issn = e.target.getAttribute('data_issn');
@@ -144,19 +253,8 @@ function addJournal(e) {
         let selectedCategories = Array.from(document.getElementById('categories').options)
             .filter(option => option.selected)
             .map(option => option.value);
-        let rank = document.getElementById('rank').value;
         let type = document.getElementById('type').value;
-        let issn = data_issn;
-        let sjr = document.getElementById('sjr').value;
-        let sjr_best_quartile = document.getElementById('sjr_best_quartile').value;
-        let h_index = document.getElementById('h_index').value;
-        let total_docs_2021 = document.getElementById('total_docs_2021').value;
-        let total_docs_3_years = document.getElementById('total_docs_3_years').value;
-        let total_refs = document.getElementById('total_refs').value;
-        let country = document.getElementById('country').value;
-        let region = document.getElementById('region').value;
         let publisher = document.getElementById('publisher').value;
-        let coverage = document.getElementById('coverage').value;
 
         // Send form data via AJAX to WordPress
         jQuery.ajax({
@@ -167,27 +265,27 @@ function addJournal(e) {
                 action: 'create_journal_post',
                 title: title,
                 categories: selectedCategories,
-                rank: rank,
                 type: type,
-                issn: issn,
-                sjr: sjr,
-                sjr_best_quartile: sjr_best_quartile,
-                h_index: h_index,
-                total_docs_2021: total_docs_2021,
-                total_docs_3_years: total_docs_3_years,
-                total_refs: total_refs,
-                country: country,
-                region: region,
                 publisher: publisher,
-                coverage: coverage,
             },
             success: function (response) {
                 // Handle success response
                 popUP.style.display = 'none';
+                output = '<h2>' + response.data + '</h2>';
+                $('#error-handler').append(output);
+                $('#error-handler').show();
+                setTimeout(function () {
+                    $('#error-handler').hide();
+                }, 5000);
             },
             error: function (error) {
                 // Handle error response
-                console.log(error);
+                output = '<h2>' + error + '</h2>';
+                $('#error-handler').append(output);
+                $('#error-handler').show();
+                setTimeout(function () {
+                    $('#error-handler').hide();
+                }, 5000);
             }
         });
     });
@@ -201,13 +299,16 @@ function editJournal(e) {
     let popUP = document.getElementById('journal_list_edit_form_popup');
     let writersNumberInput = document.getElementById('editorsInput');
     let articleTitleInput = document.getElementById('titleInput');
+    let academicYearInput = document.getElementById('academicYear');
     let writersNumber = writersNumberInput.value.trim();
     let articleTitle = articleTitleInput.value.trim();
+    let academicYear = academicYearInput.value.trim();
     popUP.style.display = 'block';
 
     // Clear input field placeholders
     writersNumberInput.placeholder = '';
     articleTitleInput.placeholder = '';
+    academicYear.placeholder = '';
 
     // AJAX request to get current ACF field values
     let data = {
@@ -224,8 +325,6 @@ function editJournal(e) {
             if (response.success) {
                 let acfFields = response.data;
 
-                console.log(acfFields.writers_number);
-
                 //Add the placeholder, if there is something
                 if (acfFields.writers_number) {
                     writersNumberInput.placeholder = acfFields.writers_number;
@@ -235,12 +334,22 @@ function editJournal(e) {
                 if (acfFields.article_title) {
                     articleTitleInput.placeholder = acfFields.article_title;
                 }
+
+                //Add the placeholder, if there is something
+                if (acfFields.academic_year) {
+                    academicYearInput.placeholder = acfFields.academic_year;
+                }
             } else {
                 console.log('Error: ' + response.data);
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log('AJAX Error: ' + textStatus + ' - ' + errorThrown);
+            output = '<h2>' + 'AJAX Error: ' + textStatus + ' - ' + errorThrown + '</h2>';
+            $('#error-handler').append(output);
+            $('#error-handler').show();
+            setTimeout(function () {
+                $('#error-handler').hide();
+            }, 5000);
         }
     });
 
@@ -248,13 +357,14 @@ function editJournal(e) {
     document.getElementById('journal_list_edit_form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        if (writersNumber !== '' || articleTitle !== '') {
+        if (writersNumber !== '' || articleTitle !== '' || academicYear !== '') {
             // AJAX request to save ACF fields
             let data = {
                 action: 'save_journal_fields',
                 post_id: data_postID,
                 writers_number: writersNumber,
-                article_title: articleTitle
+                article_title: articleTitle,
+                academic_year: academicYear
             };
 
             // Send the data to the server
@@ -264,13 +374,28 @@ function editJournal(e) {
                 data: data,
                 success: function (response) {
                     if (response.success) {
-                        console.log('ACF fields saved successfully.');
+                        output = '<h2>' + 'ACF fields saved successfully.' + '</h2>';
+                        jQuery('#error-handler').append(output);
+                        jQuery('#error-handler').show();
+                        setTimeout(function () {
+                            jQuery('#error-handler').hide();
+                        }, 5000);
                     } else {
-                        console.log('Error: ' + response.data);
+                        output = '<h2>' + 'Error: ' + response.data + '</h2>';
+                        jQuery('#error-handler').append(output);
+                        jQuery('#error-handler').show();
+                        setTimeout(function () {
+                            jQuery('#error-handler').hide();
+                        }, 5000);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.log('AJAX Error: ' + textStatus + ' - ' + errorThrown);
+                    output = '<h2>' + 'AJAX Error: ' + textStatus + ' - ' + errorThrown + '</h2>';
+                    jQuery('#error-handler').append(output);
+                    jQuery('#error-handler').show();
+                    setTimeout(function () {
+                        jQuery('#error-handler').hide();
+                    }, 5000);
                 }
             });
         }
@@ -279,5 +404,23 @@ function editJournal(e) {
         popUP.style.display = 'none';
     });
 }
+
+//This is for showing the PDF Button, if something are in the response div
+function watchDivAndToggleDisplay(watchedDivId, targetElementId) {
+    var watchedDiv = document.getElementById(watchedDivId);
+    var targetElement = document.getElementById(targetElementId);
+
+    var observer = new MutationObserver(function (mutations) {
+        if (watchedDiv.innerHTML.trim() === '') {
+            targetElement.style.display = 'none';
+        } else {
+            targetElement.style.display = 'inline-block';
+        }
+    });
+
+    observer.observe(watchedDiv, {childList: true, subtree: true});
+}
+
+
 
 
