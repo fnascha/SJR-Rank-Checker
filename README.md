@@ -25,7 +25,7 @@ This project is the bachelor thesis of Fekete Dániel, a Sapientia Informatics s
 
 ## Usage
 
-The website is available at: [https://rankchecker.imok.space/](https://rankchecker.imok.space/)
+The website is available at: [https://dev.imok.biz/dani-vizsga/](https://dev.imok.biz/dani-vizsga/)
 
 **Please note that the site is password protected. If you would like to access it, kindly contact me for the necessary credentials.**
 
